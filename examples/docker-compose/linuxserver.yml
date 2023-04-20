@@ -4,6 +4,8 @@ services:
   wireguard:
     image: linuxserver/wireguard:latest
     container_name: wireguard
+    networks:
+      - captain-overlay-network
     cap_add:
       - NET_ADMIN
     volumes:
@@ -13,6 +15,7 @@ services:
       - "5000:5000"
       # port of the wireguard server
       - "51820:51820/udp"
+    restart: always
 
   wireguard-ui:
     image: ngoduykhanh/wireguard-ui:latest
@@ -40,3 +43,8 @@ services:
     volumes:
       - ./db:/app/db
       - ./config:/etc/wireguard
+    restart: always
+
+networks:
+  captain-overlay-network:
+    external: true
